@@ -11,6 +11,10 @@ export default class Overworld {
   }
 
   startGameLoop() {
+    let previousDelta = 0;
+    let fpsLimit = 60;
+    let updateId;
+
     const step = () => {
       //Clear canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -36,8 +40,22 @@ export default class Overworld {
 
       this.map.drawUpper(this.ctx, this.cameraPerson);
 
-      requestAnimationFrame(() => {
-        step();
+      requestAnimationFrame((a) => {
+        function update(currentDelta) {
+          updateId = requestAnimationFrame(update);
+
+          let delta = currentDelta - previousDelta;
+
+          if (fpsLimit && delta < 1000 / fpsLimit - 0.1) {
+            return;
+          }
+
+          /* your code here */
+          step();
+          previousDelta = currentDelta;
+        }
+
+        update(a);
       });
     };
 
