@@ -42,3 +42,8 @@ export const getNextPosition = (x, y, direction) => {
 
   return { nextX, nextY };
 };
+
+export const emitEvent = (name, detail) => {
+  const event = new CustomEvent(name, { detail });
+  document.dispatchEvent(event);
+};

@@ -31,9 +31,50 @@ export const DemoRoomMap = {
       isControllAble: true,
     }),
     npc1: new Person({
-      x: withGrid(5),
-      y: withGrid(6),
+      x: withGrid(7),
+      y: withGrid(5),
       src: "../../images/characters/people/npc1.png",
+      behaviorLoop: [
+        {
+          type: "stand",
+          direction: "up",
+          time: 2000,
+        },
+        {
+          type: "stand",
+          direction: "left",
+          time: 200,
+        },
+        {
+          type: "stand",
+          direction: "right",
+          time: 500,
+        },
+      ],
+    }),
+    npc2: new Person({
+      x: withGrid(3),
+      y: withGrid(7),
+      src: "../../images/characters/people/npc2.png",
+      behaviorLoop: [
+        {
+          type: "walk",
+          direction: "up",
+        },
+        {
+          type: "walk",
+          direction: "left",
+        },
+        {
+          type: "walk",
+          direction: "down",
+          time: 200,
+        },
+        {
+          type: "walk",
+          direction: "right",
+        },
+      ],
     }),
   },
   walls: {

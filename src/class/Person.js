@@ -1,3 +1,4 @@
+import { emitEvent } from "../utils";
 import GameObject from "./GameObject";
 
 export default class Person extends GameObject {
@@ -16,9 +17,9 @@ export default class Person extends GameObject {
 
   update(state) {
     if (this.momentRemaining > 0) {
-      this.updateDirection();
+      this.updatePosition();
     } else {
-      if (state.arrow && this.isControllAble) {
+      if (state.arrow && this.isControllAble && !state.map.isCutScenePlaying) {
         this.startBehavior(state, {
           type: "walk",
           direction: state.arrow,
@@ -30,21 +31,45 @@ export default class Person extends GameObject {
   }
 
   startBehavior(state, behavior) {
+    this.direction = behavior.direction;
     if (behavior.type === "walk") {
-      this.direction = behavior.direction;
-      if (!state.map.isSpaceTaken(this.x, this.y, this.direction)) {
-        this.momentRemaining = 16;
+      //Stop here if space is not free
+      if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
+        if (behavior.retry) {
+          setTimeout(() => {
+            this.startBehavior(state, behavior);
+          }, 50);
+        }
+
+        return;
       }
+
+      //Ready to walk!
+      state.map.moveWall(this.x, this.y, this.direction);
+      this.momentRemaining = 16;
+      this.updateAnimation();
+    }
+
+    if (behavior.type === "stand") {
+      setTimeout(() => {
+        emitEvent("PersonStandComplete", {
+          whoId: this.id,
+        });
+      }, behavior.time);
     }
   }
 
-  updateDirection() {
-    if (!this.isControllAble) return;
-    if (this.momentRemaining > 0) {
-      const [dir, value] = this.actionDirection[this.direction];
+  updatePosition() {
+    // if (!this.isControllAble) return;
+    const [property, change] = this.actionDirection[this.direction];
+    this[property] += change;
+    this.momentRemaining -= 1;
 
-      this[dir] += value;
-      this.momentRemaining -= 1;
+    //emit event when walking complete
+    if (this.momentRemaining === 0) {
+      emitEvent("PersonWalkingComplete", {
+        whoId: this.id,
+      });
     }
   }
 

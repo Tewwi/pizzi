@@ -31,12 +31,14 @@ export default class Overworld {
       this.map.drawLower(this.ctx, this.cameraPerson);
 
       //draw to obj screen
-      Object.values(this.map.gameObjs).forEach((gameObj) => {
-        gameObj.sprite.draw(this.ctx, this.cameraPerson);
-        if (!gameObj.isControllAble) {
-          this.map.walls[`${gameObj.x},${gameObj.y}`] = true;
-        }
-      });
+      Object.values(this.map.gameObjs)
+        .sort((a, b) => a.y - b.y)
+        .forEach((gameObj) => {
+          gameObj.sprite.draw(this.ctx, this.cameraPerson);
+          if (!gameObj.isControllAble) {
+            this.map.walls[`${gameObj.x},${gameObj.y}`] = true;
+          }
+        });
 
       this.map.drawUpper(this.ctx, this.cameraPerson);
 
@@ -64,9 +66,39 @@ export default class Overworld {
 
   init() {
     this.map = new OverworldMap(DemoRoomMap);
-    this.inputDirection = new InputDirection();
+    this.map.mountObjects();
 
+    this.inputDirection = new InputDirection();
     this.inputDirection.init();
+
+    this.map.playCutScene([
+      {
+        type: "walk",
+        direction: "up",
+        who: "hero",
+      },
+      {
+        type: "walk",
+        direction: "left",
+        who: "npc1",
+      },
+      {
+        type: "walk",
+        direction: "up",
+        who: "hero",
+      },
+      {
+        type: "walk",
+        direction: "left",
+        who: "npc1",
+      },
+      {
+        type: "walk",
+        direction: "down",
+        who: "npc1",
+      },
+    ]);
+
     this.startGameLoop();
   }
 }
