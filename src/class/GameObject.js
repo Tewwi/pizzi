@@ -9,6 +9,7 @@ export default class GameObject {
     this.id = config.id || null;
     this.behaviorLoop = config.behaviorLoop || [];
     this.behaviorLoopIndex = 0;
+    this.taking = config.taking || [];
 
     this.sprite = new Sprite({
       src: config.src,
@@ -26,7 +27,12 @@ export default class GameObject {
   }
 
   async doBehavior(map) {
-    if (this.behaviorLoop.length === 0 || map.isCutScenePlaying) return;
+    if (
+      this.behaviorLoop.length === 0 ||
+      map.isCutScenePlaying ||
+      this.isStanding
+    )
+      return;
 
     let eventConfig = this.behaviorLoop[this.behaviorLoopIndex];
     eventConfig.who = this.id;

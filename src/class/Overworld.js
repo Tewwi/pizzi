@@ -1,4 +1,4 @@
-import { DemoRoomMap, KitchenMap } from "../constants/Map";
+import { DemoRoomMap } from "../constants/Map";
 import InputDirection from "./InputDirection";
 import OverworldMap from "./OverworldMap";
 
@@ -67,37 +67,38 @@ export default class Overworld {
   init() {
     this.map = new OverworldMap(DemoRoomMap);
     this.map.mountObjects();
+    this.map.bindActionInput();
 
     this.inputDirection = new InputDirection();
     this.inputDirection.init();
 
-    this.map.playCutScene([
-      {
-        type: "walk",
-        direction: "up",
-        who: "hero",
-      },
-      {
-        type: "walk",
-        direction: "left",
-        who: "npc1",
-      },
-      {
-        type: "walk",
-        direction: "up",
-        who: "hero",
-      },
-      {
-        type: "walk",
-        direction: "left",
-        who: "npc1",
-      },
-      {
-        type: "walk",
-        direction: "down",
-        who: "npc1",
-      },
-    ]);
+    // this.map.playCutScene([
+    //   {
+    //     type: "walk",
+    //     direction: "up",
+    //     who: "hero",
+    //   },
+    //   {
+    //     type: "textMessage",
+    //     text: "Hello there",
+    //     who: "npc1",
+    //   },
+    //   {
+    //     type: "walk",
+    //     direction: "up",
+    //     who: "hero",
+    //   },
+    //   {
+    //     type: "walk",
+    //     direction: "left",
+    //     who: "npc1",
+    //   },
+    //   {
+    //     type: "walk",
+    //     direction: "down",
+    //     who: "npc1",
+    //   },
+    // ]);
 
     this.startGameLoop();
   }

@@ -17,6 +17,12 @@ export const asGirdWalls = (x, y) => {
   return `${x * 16},${y * 16}`;
 };
 
+/*
+ * @param {number} x
+ * @param {number} y
+ * @param {string} direction
+ * @returns {object} nextX, nextY
+ */
 export const getNextPosition = (x, y, direction) => {
   let nextX = x;
   let nextY = y;
@@ -36,11 +42,22 @@ export const getNextPosition = (x, y, direction) => {
       nextY += size;
       break;
   }
-
   // console.log("current", x, y);
   // console.log("next", nextX, nextY);
-
   return { nextX, nextY };
+};
+
+export const getOppositeDirection = (direction) => {
+  switch (direction) {
+    case "down":
+      return "up";
+    case "left":
+      return "right";
+    case "right":
+      return "left";
+    default:
+      return "down";
+  }
 };
 
 export const emitEvent = (name, detail) => {

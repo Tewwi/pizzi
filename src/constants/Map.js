@@ -51,6 +51,27 @@ export const DemoRoomMap = {
           time: 500,
         },
       ],
+      taking: [
+        {
+          events: [
+            {
+              type: "textMessage",
+              text: "Hello, I'm a NPC",
+              who: "npc1",
+            },
+            {
+              type: "textMessage",
+              text: "Hehe",
+              who: "npc1",
+            },
+            {
+              type: "walk",
+              direction: "down",
+              who: "hero",
+            },
+          ],
+        },
+      ],
     }),
     npc2: new Person({
       x: withGrid(3),
@@ -68,7 +89,6 @@ export const DemoRoomMap = {
         {
           type: "walk",
           direction: "down",
-          time: 200,
         },
         {
           type: "walk",

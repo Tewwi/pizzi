@@ -1,0 +1,27 @@
+.text-box {
+  background: #dfa96a;
+  color: #333;
+  height: 35px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.text-box-p {
+  margin: 0;
+  margin-left: 5px;
+  margin-top: 2px;
+  font-size: 0.65rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.text-box-button {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: 0.4rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}

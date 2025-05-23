@@ -2,7 +2,9 @@ import {
   centerGridCameraX,
   centerGridCameraY,
   getNextPosition,
+  getOppositeDirection,
 } from "../utils";
+import { KeyPressListener } from "./KeyPressListener";
 import OverWorldEvent from "./OverWorldEvent";
 
 export default class OverworldMap {
@@ -62,6 +64,22 @@ export default class OverworldMap {
     this.addWall(nextX, nextY);
   }
 
+  bindActionInput() {
+    this.actionInput = new KeyPressListener("Space", () => {
+      const hero = this.gameObjs.hero;
+      const { nextX, nextY } = getNextPosition(hero.x, hero.y, hero.direction);
+      const nextObj = Object.values(this.gameObjs).find(
+        (obj) => obj.x === nextX && obj.y === nextY
+      );
+
+      if (nextObj && nextObj.taking.length > 0) {
+        const newDirection = getOppositeDirection(hero.direction);
+        nextObj.direction = newDirection;
+        this.playCutScene(nextObj.taking[0].events);
+      }
+    });
+  }
+
   /**
    * Play a cut scene
    * @param {Array<{type: string, direction: string, who: string, time?: number}>} events - The events to play
@@ -76,6 +94,9 @@ export default class OverworldMap {
     }
 
     this.isCutScenePlaying = false;
-    this.mountObjects();
+    //Continue the behavior of the objects
+    for (const obj of Object.values(this.gameObjs)) {
+      obj.doBehavior(this);
+    }
   }
 }

@@ -1,3 +1,5 @@
+import { TextBox } from "../components/TextBox";
+
 export default class OverWorldEvent {
   constructor({ map, event }) {
     this.map = map;
@@ -52,6 +54,16 @@ export default class OverWorldEvent {
     };
 
     document.addEventListener("PersonStandComplete", handleStandingComplete);
+  }
+
+  textMessage(resolve) {
+    const textBox = new TextBox(
+      `${this.event.who}:</br> ${this.event.text}`,
+      () => {
+        resolve();
+      }
+    );
+    textBox.init(document.querySelector(".game-container"));
   }
 
   init() {
