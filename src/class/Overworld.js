@@ -10,6 +10,16 @@ export default class Overworld {
     this.map = null;
   }
 
+  bindSceneSpace() {
+    document.addEventListener("PersonWalkingComplete", (e) => {
+      console.log(e.detail.whoId, "event");
+      if (e.detail.whoId === "hero") {
+        this.map.isCutSceneSpace();
+        // this.playCutScene(this.cutSceneSpace[`${x},${y}`].events);
+      }
+    });
+  }
+
   startGameLoop() {
     let previousDelta = 0;
     let fpsLimit = 60;
@@ -68,6 +78,7 @@ export default class Overworld {
     this.map = new OverworldMap(DemoRoomMap);
     this.map.mountObjects();
     this.map.bindActionInput();
+    this.bindSceneSpace();
 
     this.inputDirection = new InputDirection();
     this.inputDirection.init();

@@ -16,8 +16,10 @@ export default class OverworldMap {
 
     this.upperImg = new Image();
     this.upperImg.src = config.upperImgSrc;
+
     this.walls = config.walls || {};
     this.isCutScenePlaying = config.isCutScenePlaying || false;
+    this.cutSceneSpace = config.cutSceneSpace || {};
   }
 
   mountObjects() {
@@ -80,6 +82,13 @@ export default class OverworldMap {
     });
   }
 
+  isCutSceneSpace() {
+    const hero = this.gameObjs.hero;
+    if (this.cutSceneSpace[`${hero.x},${hero.y}`] && !this.isCutScenePlaying) {
+      this.playCutScene(this.cutSceneSpace[`${hero.x},${hero.y}`].events);
+    }
+  }
+
   /**
    * Play a cut scene
    * @param {Array<{type: string, direction: string, who: string, time?: number}>} events - The events to play
@@ -93,6 +102,7 @@ export default class OverworldMap {
       await eventHandler.init();
     }
 
+    console.log("cut scene done");
     this.isCutScenePlaying = false;
     //Continue the behavior of the objects
     for (const obj of Object.values(this.gameObjs)) {

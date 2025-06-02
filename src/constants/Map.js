@@ -17,6 +17,7 @@ export const KitchenMap = {
       src: "../../images/characters/people/npc2.png",
     }),
   },
+  cutSceneSpace: [],
   walls: {},
 };
 
@@ -32,7 +33,7 @@ export const DemoRoomMap = {
     }),
     npc1: new Person({
       x: withGrid(7),
-      y: withGrid(5),
+      y: withGrid(8),
       src: "../../images/characters/people/npc1.png",
       behaviorLoop: [
         {
@@ -74,28 +75,69 @@ export const DemoRoomMap = {
       ],
     }),
     npc2: new Person({
-      x: withGrid(3),
-      y: withGrid(7),
+      x: withGrid(8),
+      y: withGrid(5),
       src: "../../images/characters/people/npc2.png",
-      behaviorLoop: [
-        {
-          type: "walk",
-          direction: "up",
-        },
+      // behaviorLoop: [
+      //   {
+      //     type: "walk",
+      //     direction: "up",
+      //   },
+      //   {
+      //     type: "walk",
+      //     direction: "left",
+      //   },
+      //   {
+      //     type: "walk",
+      //     direction: "down",
+      //   },
+      //   {
+      //     type: "walk",
+      //     direction: "right",
+      //   },
+      // ],
+    }),
+  },
+  cutSceneSpace: {
+    [asGirdWalls(7, 4)]: {
+      events: [
         {
           type: "walk",
           direction: "left",
+          who: "npc2",
         },
         {
-          type: "walk",
-          direction: "down",
+          type: "stand",
+          direction: "up",
+          who: "npc2",
+        },
+        {
+          type: "textMessage",
+          text: "You cant be there",
+          who: "npc2",
         },
         {
           type: "walk",
           direction: "right",
+          who: "npc2",
+        },
+        {
+          type: "stand",
+          direction: "left",
+          who: "npc2",
+        },
+        {
+          type: "walk",
+          direction: "down",
+          who: "hero",
+        },
+        {
+          type: "walk",
+          direction: "left",
+          who: "hero",
         },
       ],
-    }),
+    },
   },
   walls: {
     // Center table
@@ -129,6 +171,8 @@ export const DemoRoomMap = {
     [asGirdWalls(9, 0)]: true,
     [asGirdWalls(10, 0)]: true,
     [asGirdWalls(11, 0)]: true,
+    [asGirdWalls(6, 4)]: true,
+    [asGirdWalls(8, 4)]: true,
 
     // Second line
     [asGirdWalls(1, 1)]: true,
