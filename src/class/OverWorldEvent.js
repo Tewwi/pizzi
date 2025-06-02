@@ -66,6 +66,11 @@ export default class OverWorldEvent {
     textBox.init(document.querySelector(".game-container"));
   }
 
+  changeMap(resolve) {
+    this.map.overworld.startOverworld(this.event.map);
+    resolve();
+  }
+
   init() {
     return new Promise((resolve) => {
       this[this.event.type](resolve);

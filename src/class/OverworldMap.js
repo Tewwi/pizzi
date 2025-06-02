@@ -10,6 +10,7 @@ import OverWorldEvent from "./OverWorldEvent";
 export default class OverworldMap {
   constructor(config) {
     this.gameObjs = config.gameObjs;
+    this.overworld = null;
 
     this.lowerImg = new Image();
     this.lowerImg.src = config.lowerImgSrc;
@@ -102,7 +103,6 @@ export default class OverworldMap {
       await eventHandler.init();
     }
 
-    console.log("cut scene done");
     this.isCutScenePlaying = false;
     //Continue the behavior of the objects
     for (const obj of Object.values(this.gameObjs)) {

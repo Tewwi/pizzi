@@ -1,4 +1,4 @@
-import { DemoRoomMap } from "../constants/Map";
+import { DemoRoomMap } from "../constants/maps/DemoRoom";
 import InputDirection from "./InputDirection";
 import OverworldMap from "./OverworldMap";
 
@@ -12,10 +12,8 @@ export default class Overworld {
 
   bindSceneSpace() {
     document.addEventListener("PersonWalkingComplete", (e) => {
-      console.log(e.detail.whoId, "event");
       if (e.detail.whoId === "hero") {
         this.map.isCutSceneSpace();
-        // this.playCutScene(this.cutSceneSpace[`${x},${y}`].events);
       }
     });
   }
@@ -74,42 +72,20 @@ export default class Overworld {
     step();
   }
 
-  init() {
-    this.map = new OverworldMap(DemoRoomMap);
+  startOverworld(mapConfig) {
+    this.map = new OverworldMap(mapConfig);
     this.map.mountObjects();
+    this.map.overworld = this;
     this.map.bindActionInput();
+  }
+
+  init() {
+    this.startOverworld(DemoRoomMap);
+
     this.bindSceneSpace();
 
     this.inputDirection = new InputDirection();
     this.inputDirection.init();
-
-    // this.map.playCutScene([
-    //   {
-    //     type: "walk",
-    //     direction: "up",
-    //     who: "hero",
-    //   },
-    //   {
-    //     type: "textMessage",
-    //     text: "Hello there",
-    //     who: "npc1",
-    //   },
-    //   {
-    //     type: "walk",
-    //     direction: "up",
-    //     who: "hero",
-    //   },
-    //   {
-    //     type: "walk",
-    //     direction: "left",
-    //     who: "npc1",
-    //   },
-    //   {
-    //     type: "walk",
-    //     direction: "down",
-    //     who: "npc1",
-    //   },
-    // ]);
 
     this.startGameLoop();
   }

@@ -1,25 +1,6 @@
-import Person from "../class/Person";
-import { asGirdWalls, withGrid } from "../utils";
-
-export const KitchenMap = {
-  lowerImgSrc: "../../images/maps/KitchenLower.png",
-  upperImgSrc: "../../images/maps/KitchenUpper.png",
-  gameObjs: {
-    hero: new Person({
-      x: withGrid(5),
-      y: withGrid(6),
-      src: "../../images/characters/people/hero.png",
-      isControllAble: true,
-    }),
-    npc2: new Person({
-      x: withGrid(10),
-      y: withGrid(8),
-      src: "../../images/characters/people/npc2.png",
-    }),
-  },
-  cutSceneSpace: [],
-  walls: {},
-};
+import Person from "../../class/Person";
+import { asGirdWalls, withGrid } from "../../utils";
+import { KitchenMap } from "./KittenRoom";
 
 export const DemoRoomMap = {
   lowerImgSrc: "../../images/maps/DemoLower.png",
@@ -65,11 +46,6 @@ export const DemoRoomMap = {
               text: "Hehe",
               who: "npc1",
             },
-            {
-              type: "walk",
-              direction: "down",
-              who: "hero",
-            },
           ],
         },
       ],
@@ -78,24 +54,6 @@ export const DemoRoomMap = {
       x: withGrid(8),
       y: withGrid(5),
       src: "../../images/characters/people/npc2.png",
-      // behaviorLoop: [
-      //   {
-      //     type: "walk",
-      //     direction: "up",
-      //   },
-      //   {
-      //     type: "walk",
-      //     direction: "left",
-      //   },
-      //   {
-      //     type: "walk",
-      //     direction: "down",
-      //   },
-      //   {
-      //     type: "walk",
-      //     direction: "right",
-      //   },
-      // ],
     }),
   },
   cutSceneSpace: {
@@ -135,6 +93,15 @@ export const DemoRoomMap = {
           type: "walk",
           direction: "left",
           who: "hero",
+        },
+      ],
+    },
+    [asGirdWalls(5, 10)]: {
+      events: [
+        {
+          who: "hero",
+          type: "changeMap",
+          map: KitchenMap,
         },
       ],
     },
